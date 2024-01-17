@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}
+Ekart | Products
+{% endblock %}
+{% block body %}
+<div class="col-md-3 mt-3 p-3">
+  <h5>Filter by Category</h5>
+  <hr>
+  <a href="/">All</a><br>
+  <a href="/watchlist">Watches</a><br>
+  <a href="/laptoplist">Laptop</a><br>
+  <a href="/mobilelist">Mobile</a>
+  <br><br><br>
+  <h5>Filter by Price</h5>
+  <hr>
+  <form method="POST" action="{% url 'range' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="Input1" class="form-label">Minimum</label>
+      <input type="text" class="form-control" name="min" id="Input1">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInput2" class="form-label">Maximum</label>
+      <input type="text" class="form-control" name="max" id="exampleInput2">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br><br>
+  <h5>Sort by Price</h5>
+  <hr>
+  <a href="/descpriceOrder">High to Low</a><br>
+  <a href="/priceOrder">Low to High</a>
+</div>
+<div class="col-md-9 mt-3 p-3 bg-body-secondary">
+  <div class="row">
+    {% for x in products %}
+    <div class="col-md-4 mb-2">
+      <div class="card" style="width: 100%;">
+        <img src="{{x.image.url}}" class="card-img-top" alt="image" width="100%" height="250px">
+        <div class="card-body">
+          <h5 class="card-title">{{x.product_name}}</h5>
+          <p class="card-text">Price: {{x.price}}</p>
+          <a href="/productDetails/{{x.product_id}}" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Product 2</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="/productDetails" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Product 3</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="/productDetails" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Product 4</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="/productDetails" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Product 5</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="/productDetails" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Product 6</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="/productDetails" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div> -->
+  </div>
+</div>
+{% endblock %}

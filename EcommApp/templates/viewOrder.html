@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+  Ekart | Cart
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-md-9">
+    <h5 class="bg-danger text-white p-2">Customer Details</h5>
+    <br>
+    {% if user.is_authenticated %}
+    <p><b>Name:</b>&nbsp; {{user.username}}</p>
+    <p><b>Mobile:</b>&nbsp; 1234567890</p>
+    <p><b>Email:</b>&nbsp; {{user.email}}</p>
+    <br>
+    {% endif %}
+    <h5 class="bg-danger text-white p-2">Cart Details</h5>
+    
+    {% for x in items %}
+    <div class="row m-3">
+      <div class="col-md-4">
+        <img src="{{x.product.image.url}}" alt="" width="100%" height="200px">
+      </div>
+      <div class="col-md-8">
+        <p><b>Product Name: </b>{{x.product.product_name}}</p>
+        <p><b>Product Price: </b>{{x.product.price}}</p>
+        <p><b>Product Quantity: </b>&nbsp; {{x.quantity}}</p>
+        <!-- <a href="/updateqty/0/{{x.product.product_id}}"><button class="btn btn-danger">-</button></a>
+        <input type="number" value="{{x.quantity}}" readonly>
+        <a href="/updateqty/1/{{x.product.product_id}}"><button class="btn btn-danger">+</button></a> -->
+        <p><b>Product Details: </b>{{x.product.desc}}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-md-3">
+    <h5 class="bg-danger text-white p-2">Total</h5>
+    <p><b>Total items({{length}}): </b>&nbsp;&nbsp;{{total}}</p>
+    <hr>
+    <p><b>Total Price: </b>&nbsp;&nbsp;{{total}}</p>
+    <a href="{% url 'payment' %}"><button type="submit" class="btn btn-danger">Make Payment</button></a>
+  </div>
+</div>
+{% endblock %}

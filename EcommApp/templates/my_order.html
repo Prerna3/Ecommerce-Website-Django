@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+Ekart | My Orders
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-md-12">
+    <h5 class="bg-danger text-white p-2">Customer Details</h5>
+    <br>
+    {% if user.is_authenticated %}
+    <p><b>Name:</b>&nbsp; {{user.username}}</p>
+    <p><b>Mobile:</b>&nbsp; 1234567890</p>
+    <p><b>Email:</b>&nbsp; {{user.email}}</p>
+    <br>
+    {% endif %}
+    <h5 class="bg-danger text-white p-2">Order Details</h5>
+    {% for x in items %}
+    <div class="row m-3">
+      <div class="col-md-4">
+        <img src="{{x.product.image.url}}" alt="" width="100%" height="250px">
+      </div>
+      <div class="col-md-8">
+        <p><b>Order ID: </b>{{x.order_id}}</p>
+        <p><b>Product Name: </b>{{x.product.product_name}}</p>
+        <p><b>Product Price: </b>{{x.product.price}}</p>
+        <p><b>Product Quantity: </b>&nbsp; {{x.quantity}}</p>
+        <p><b>Product Details: </b>{{x.product.desc}}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

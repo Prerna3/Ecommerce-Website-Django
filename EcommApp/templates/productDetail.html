@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+Ekart | Product Detail
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-md-3 mt-3 p-3">
+    <img src="{{products.image.url}}" class="card-img-top" alt="image" width="100%" height="250px">
+  </div>
+  <div class="col-md-9 mt-3 p-3">
+    <div class="card-body">
+      <h5 class="card-title">{{products.product_name}}</h5>
+      <p class="card-text">Description: {{products.desc}}</p>
+      <p class="card-text">Price: {{products.price}}</p>
+    </div>
+    <br>
+    <a href="/addCart/{{products.product_id}}"><button type="button" class="btn btn-danger">Add to Cart</button></a>
+    <a href="/"><button type="button" class="btn btn-danger">Back</button></a>
+  </div>
+</div>
+{% endblock %}

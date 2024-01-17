@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title%} Search Book {% endblock%}
+{% block body %}
+<h1>Search result for {{query}}</h1>
+<!-- <div class="col-md-3 mt-3 p-3">
+    <h5>Filter by Category</h5>
+    <hr>
+    <a href="/">All</a><br>
+    <a href="/watchlist">Watches</a><br>
+    <a href="/laptoplist">Laptop</a><br>
+    <a href="">Mobile</a>
+    <br><br><br>
+    <h5>Filter by Price</h5>
+    <hr>
+    <form method="POST" action="{% url 'range' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="Input1" class="form-label">Minimum</label>
+            <input type="text" class="form-control" name="min" id="Input1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInput2" class="form-label">Maximum</label>
+            <input type="text" class="form-control" name="max" id="exampleInput2">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br><br>
+    <h5>Sort by Price</h5>
+    <hr>
+    <a href="">High to Low</a><br>
+    <a href="">Low to High</a>
+</div>
+<div class="col-md-9 mt-3 p-3 bg-body-secondary">
+    <div class="row">
+        {% for x in results %}
+        <div class="col-md-4 mb-2">
+            <div class="card" style="width: 100%;">
+                <img src="{{x.image.url}}" class="card-img-top" alt="image" width="100%" height="250px">
+                <div class="card-body">
+                    <h5 class="card-title">{{x.product_name}}</h5>
+                    <p class="card-text">Price: {{x.price}}</p>
+                    <a href="/productDetails/{{x.product_id}}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> -->
+
+<table border="1" cellpadding="10px" class="table-bordered">
+    <tr class="bg-danger text-white" style=" text-align: center;">
+        <th>Sr.No.</th>
+        <th>Product Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Image</th>
+    </tr>
+    {% for x in results %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{x.product_name}}</td>
+        <td>{{x.desc}}</td>
+        <td>{{x.price}}</td>
+        <td><img src="{{x.image.url}}" width="100%" height="150px"></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

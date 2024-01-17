@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+Ekart | Login
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-md-12 mt-2 p-2">
+    <h1>Login</h1>
+  </div>
+  <center>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Username</label>
+        <input type="text" class="form-control" name = "username" id="exampleInputEmail1" placeholder="username">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control"  name = "password" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </center>
+</div>
+<div class="row">
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+  {% endif %} 
+</div>
+{% endblock %}

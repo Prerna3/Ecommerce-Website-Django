@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %} {% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/viewCart">View Cart</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/myOrder">My Orders</a>
+              </li>
+              {%else%}
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+              </li>
+              {% endif %}
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link">Welcome {{user.username}}</a>
+              </li>
+              {%else%}
+              <li class="nav-item">
+                <a class="nav-link">Welcome! Guest</a>
+              </li>
+              {% endif %}
+            </ul>
+            <form class="d-flex" role="search" method="post" action="{% url 'search' %}">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>&nbsp; &nbsp;&nbsp;
+            <h2><a href="{% url 'viewCart' %}"><i class="bi bi-cart4"></i></a></h2>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="row">
+      {% block body %}
+
+      {% endblock %}
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <h4>Address</h4>
+        <hr>
+        <P>76993 Herb Shore, Dickinsonstad, ND 73708</P>
+      </div>
+      <div class="col-md-4">
+        <h4>Quick Links</h4>
+        <hr>
+        <a href="">Home</a><br><br>
+        <a href="">Cart</a><br><br>
+        <a href="">About</a><br><br>
+      </div>
+      <div class="col-md-4">
+        <h4>Contact Us</h4>
+        <hr>
+        <h2><a href="https://web.whatsapp.com/"><i class="bi bi-whatsapp"></i></a></h2>
+        <h2><a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a></h2>
+        <h2><a href="https://web.facebook.com/"><i class="bi bi-facebook"></i></a></h2>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
