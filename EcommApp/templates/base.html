@@ -49,11 +49,17 @@
               <li class="nav-item">
                 <a class="nav-link">Welcome {{user.username}}</a>
               </li>
-              {%else%}
+              {% if user.is_superuser %}
               <li class="nav-item">
-                <a class="nav-link">Welcome! Guest</a>
+                <a class="nav-link" href="/insertProduct">Insert Product</a>
               </li>
               {% endif %}
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link">Welcome Guest!</a>
+              </li>
+              {% endif %}
+
             </ul>
             <form class="d-flex" role="search" method="post" action="{% url 'search' %}">
               {% csrf_token %}
