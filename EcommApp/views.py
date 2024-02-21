@@ -6,6 +6,9 @@ from django.contrib import messages
 import random
 import razorpay
 from django.contrib.auth.decorators import user_passes_test
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.utils.html import strip_tags
+from django.template.loader import render_to_string
 
 
 # Create your views here.
@@ -215,11 +218,22 @@ def logout_user(req):
 
 
 def makePayment(req):
+    uemail = req.user.email
     orders = Order.objects.filter(user=req.user, is_completed=False)
     total_price = 0
     for x in orders:
         total_price += x.product.price * x.quantity
         oid = x.order_id
+    print(total_price)
+    orderdetails = Order.objects.filter(user=req.user, is_completed=False)
+    order_details = [
+        {
+            "product_name": order.product.product_name,
+            "quantity": order.quantity,
+            "price": order.product.price,
+        }
+        for order in orderdetails
+    ]
     client = razorpay.Client(
         auth=("rzp_test_sUTZ37PTI6oDaZ", "81iQLqkJ2a10ceOpuTfHHSG2")
     )
@@ -231,6 +245,7 @@ def makePayment(req):
     c = CartItem.objects.filter(user=req.user)
     c.delete()
     orders.update(is_completed=True)
+    sendUserMail(req, orderdetails, req.user.email, total_price)
     return render(req, "payment.html", context)
 
 
@@ -261,3 +276,26 @@ def insertProduct(req):
                 return render(req, "insertProd.html", {"form": form, "username": user})
     else:
         return redirect("/login")
+
+
+def sendUserMail(req, od, recipient_email, tp):
+    email_body = render_to_string(
+        "order_placed.html", {"order_details": od, "total_price": tp}
+    )
+    # send_mail(
+    #     "Order placed successfully",
+    #     "Order Details are: ",
+    #     "prernaranjan351@gmail.com",
+    #     ["to@example.com"],
+    #     fail_silently=False,
+    # )
+    messages = EmailMultiAlternatives(
+        subject="Order placed successfully",
+        body=email_body,
+        from_email=None,
+        to=[recipient_email],
+    )
+    messages.attach_alternative(email_body, "text/html")
+    messages.send()
+
+    return HttpResponse("Mail sent successfully")

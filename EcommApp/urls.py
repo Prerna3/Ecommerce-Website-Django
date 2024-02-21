@@ -39,4 +39,5 @@ urlpatterns = [
     path("payment/", views.makePayment, name="payment"),
     path("myOrder/", views.myOrder, name="myOrder"),
     path("insertProduct/", views.insertProduct, name="insertProduct"),
+    # path("sendmail/", views.sendUserMail, name="sendmail"),
 ]
